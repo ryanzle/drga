@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invernadero Instituto Politécnico Loyola</title>
+
+    <!--styling (note: screen is 800x400)-->
+    <link rel = "stylesheet" type = "text/css" href = "./css/style.css"/>
+
+    <!--scripts-->
+    <!-- note that "defer" ensures scripts begin AFTER page load to ensure all elements load fully first -->
+
+    <!-- script to prevent fullscreen exit - not currently working idk why lol -->
+    <!-- <script type = "text/javascript" src = "./script/close.js" defer></script> -->
+
+    <!-- python scripts to:
+        -put data in database
+        -grab data from database & put into data.js file
+        ... do i need to put them here?
+    -->
+
+    <script type = "text/python" src = "./script/parser.py" defer></script>
+    <script type = "text/python" src = "./script/get_data.py" defer></script>
+    
+    <!-- script to display data - defined as module to allow import of data.js file -->
+    <script type = "module" src = "./script/data_display.js" defer></script>
+
+    <!-- script to create graph - unnecessary on index page? -->
+
+</head>
+<body>
+    <section id = "header">
+        <a href = "./index.html">
+            <img class = "logo" src = "./img/logo_solo.png">
+        </a>
+        <h1>Invernadero Instituto Politécnico Loyola</h1>
+    </section>
+
+    <main>
+        <section class = "sensor">
+            <h2>Sensor 1</h2>
+            <section class = "data">
+                <a class = "unit temperature" href = "./html/temperature.html">
+                    <img class = "data-icon" src = "./img/thermometer.png">
+                    <h3>Temperatura</h3>
+                    <h4>Último actualizado: <span class = "temperature timestamp">UNKNOWN</span></h4>
+                    <span class = "measure">
+                        <span class = "temperature value">?</span><span>°C</span>
+                    </span>
+                </a>
+                <a class = "unit humidity" href = "./html/humidity.html">
+                    <img class = "data-icon" src = "./img/sun.png">
+                    <h3>Humedad</h3>
+                    <h4>Último actualizado: <span class = "humidity timestamp">UNKNOWN</span></h4>
+                    <span class = "measure">
+                        <span class = "humidity value">?</span><span>%</span>
+                    </span>
+                </a>
+                <a class = "unit moisture" href = "./html/moisture.html">
+                    <img class = "data-icon" src = "./img/rain.png">
+                    <h3>Humedad del Suelo</h3>
+                    <h4>Último actualizado: <span class = "moisture timestamp">UNKNOWN</span></h4>
+                    <span class = "measure">
+                        <span class = "moisture value">?</span><span>%</span>
+                    </span>
+                </a>
+                <a class = "unit light" href = "./html/light.html">
+                    <img class = "data-icon" src = "./img/light.png">
+                    <h3>Luz</h3>
+                    <h4>Último actualizado: <span class = "light timestamp">UNKNOWN</span></h4>
+                    <span class = "measure">
+                        <span class = "light value">?</span><span class = "den"></span>
+                    </span>
+                </a>
+            </section>
+        </section>
+<!-- sensor 2: currently just a copy of sensor 1 data -->
+
+<section class = "sensor">
+    <h2>Sensor 2</h2>
+    <section class = "data">
+        <a class = "unit temperature" href = "./html/temperature.html">
+            <img class = "data-icon" src = "./img/thermometer.png">
+            <h3>Temperatura</h3>
+            <h4>Último actualizado: <span class = "temperature timestamp">UNKNOWN</span></h4>
+            <span class = "measure">
+                <span class = "temperature value">?</span><span>°C</span>
+            </span>
+        </a>
+        <a class = "unit humidity" href = "./html/humidity.html">
+            <img class = "data-icon" src = "./img/sun.png">
+            <h3>Humedad</h3>
+            <h4>Último actualizado: <span class = "humidity timestamp">UNKNOWN</span></h4>
+            <span class = "measure">
+                <span class = "humidity value">?</span><span>%</span>
+            </span>
+        </a>
+        <a class = "unit moisture" href = "./html/moisture.html">
+            <img class = "data-icon" src = "./img/rain.png">
+            <h3>Humedad del Suelo</h3>
+            <h4>Último actualizado: <span class = "moisture timestamp">UNKNOWN</span></h4>
+            <span class = "measure">
+                <span class = "moisture value">?</span><span>%</span>
+            </span>
+        </a>
+        <a class = "unit light" href = "./html/light.html">
+            <img class = "data-icon" src = "./img/light.png">
+            <h3>Luz</h3>
+            <h4>Último actualizado: <span class = "light timestamp">UNKNOWN</span></h4>
+            <span class = "measure">
+                <span class = "light value">?</span><span class = "den"></span>
+            </span>
+        </a>
+    </section>
+</section>
+
+    </main>  
+
+</body>
+</html>

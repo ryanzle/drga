@@ -1,0 +1,186 @@
+/*
+*   color reference
+*   blue #2F3490
+*   yellow #F6EF1A
+*   red #EA292E
+*
+*/
+/*overall page styling*/
+body {
+    /*ensure header is flush to top/sides of browser*/
+    margin: 0;
+
+    /*make entire page Arial font; if Arial is not available, use any sans serif font*/
+    font-family: 'Arial', sans-serif;
+
+    /*make page's background color gray*/
+    background-color: #DEDEDE;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/*header*/
+h1 {
+    color: #F5F5F5;
+    font-size: 3vw;
+
+    /*center header text horizontally*/
+    margin-right: auto;
+    margin-left: auto;
+
+    /*center header text vertically*/
+    margin-top: .5vw;
+
+}
+
+.logo {
+    height: 4.5vw;
+    position: fixed;
+}
+
+#header {
+    /*ensure logo and text are side-to-side*/
+    display: flex;
+
+    /*header position; keep header at top of page*/
+    position: fixed;
+    top: 0;
+    
+    /*keep header in front of all other elements*/
+    z-index: 1; 
+
+    /*header sizing*/
+    padding: 1vw;
+    min-width: 100%;
+    height: 4.5vw;
+
+    /*header styling*/
+    background-color: #2F3490;
+}
+
+/*data sections styling*/
+main {
+    /*ensure that main content clears header*/
+    margin-top: 8vw;
+
+    /*display sensor boxes in grid*/
+    /*display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;*/
+}
+
+/*sensor data display section*/
+.sensor {
+    /*positioning*/
+    margin-right: 2.5vw;
+    margin-left: 2.5vw;
+    margin-bottom: 4vw;
+
+    /*sizing*/
+    /*width: 40vw;*/
+    padding: 2vw;
+
+    /*styling*/
+    background-color: #f0efef;
+    border-radius: 3vw;
+    outline: solid #2F3490;
+    box-shadow: .5vw .5vw #2F3490;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 2.5vw;
+}
+
+/*data section*/
+h3 {
+    font-size: 2.5vw;
+
+    /*reduce space between header & other elements*/
+    margin-top: 1vw;
+    margin-bottom: .2vw;
+}
+
+h4 {
+    font-size: 1.5vw;
+    font-style: italic;
+    font-weight: normal;
+
+    /*align text closer to header*/
+    margin-top: .1vw;
+    
+    /*reduce space between bottom of timestamp & top of measure*/
+    margin-bottom: 1vw;
+}
+
+.data {
+    display: flex;
+    /*justify-content: space-between;*/
+    justify-content: space-around;
+    text-align: center;
+}
+
+.unit {
+    padding: 1vw;
+    border-radius: 1vw;
+}
+
+.unit:hover {
+    background-color: #C9C9C9;
+}
+
+/*data icons styling; ensure icons are all same size*/
+.data-icon {
+    width: 9.5vw;
+}
+
+.measure {
+    font-size: 3.5vw;
+
+    /*align text closer to headers*/
+    margin-top: .1vw; 
+}
+
+.den {
+    /*make light intensity max indicator a little smaller than actual data value*/
+    font-size: 2vw;
+}
+
+/*data display pages styling*/
+canvas {
+    /*graph size*/
+    max-width: 36vw;
+    max-height: 18vw;
+
+    /*blocking in graph display*/
+    border: 1px solid black;
+    font-size: 2vw;
+    line-height: 25vw;
+}
+
+/*return button styling*/
+a.return {
+    /*removing default browser styling*/
+    box-shadow: none;
+    border: none;
+
+    /*button positioning*/
+    position: relative;
+    top: -4vw;
+    left: 83vw;
+
+    /*button styling*/
+    background-color: #DEDEDE;
+    border-radius: 1vw;
+    padding: 1vw;
+    font-size: 1.5vw;
+
+}
+
+/*return button styling when hovered over or selected*/
+a.return:hover {
+    background-color: #C9C9C9;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invernadero Instituto Politécnico Loyola</title>
+
+    <!--styling (note: screen is 800x400)-->
+    <link rel = "stylesheet" type = "text/css" href = "../css/style.css"/>
+
+    <!--scripts-->
+    <!-- note that "defer" ensures scripts begin AFTER page load to ensure all elements load fully first -->
+
+    <!-- script to prevent fullscreen exit - not currently working idk why lol -->
+    <!-- <script type = "text/javascript" src = "./script/close.js" defer></script> -->
+
+    <script type = "module" src = "../node_modules/chart.js/dist/Chart.js"></script>
+    <script type = "module" src = "../script/graph.js"></script>
+    <script type = "module" src = "../script/graph_week.js"></script>
+
+</head>
+<body>
+    <section id = "header">
+        <a href = "../index.html">
+            <img class = "logo" src = "../img/logo_solo.png">
+        </a>
+        <h1>Instituto Politécnico Loyola - Sensor 1</h1>
+    </section>
+
+    <main>
+        <section class = "sensor data-display temperature-display">
+            <h2>Sensor <span class = "sensor-number">1</span>: Gráfico de luz</h2>
+            <a class = "return" href = "../index.html">Volver</a>
+            <section class = "data graph-display">
+                <canvas id = "lightChart" class = "chart luz day"></canvas>
+                <canvas id = "lightChartW" class = "chart luz week"></canvas>
+            </section>
+        </section>
+
+    </main>  
+
+</body>
+</html>
