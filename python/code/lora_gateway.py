@@ -40,7 +40,7 @@ class LoRaRcvCont(LoRa):
         
         print("\nSending Payload to Parser:")
         rssi_value = self.get_rssi_value()
-        #parser(string, rssi_value);
+        parser(string, rssi_value);
         
         self.set_mode(MODE.SLEEP)
         self.reset_ptr_rx()
