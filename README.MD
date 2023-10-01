@@ -2,6 +2,12 @@ Dominican Republic Greenhouse Automation
 SCU Senior Design Project
 Mark Castillo, Ryan Le, Erik Mitchell
 
+
+###### parser.py
+
+##### pySX127x
+This folder is a fork of the Python LoRa library that we used to enable LoRa communication on the Raspberry Pi. Since our group was more comfortable coding with Python, and to keep consistency with the other Python code on the Raspberry Pi, we used this library to write the file lora_gateway.py (see the 2nd and 3rd lines). The fork also contains other examples of ways to use the library which could be informative to following projects.
+
 #### SENSOR
 
 ##### sensor.c.ino
