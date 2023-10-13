@@ -46,9 +46,10 @@ This directory contains the HTML and CSS that make up the application’s visual
 ##### SCRIPTS
 Most of the code in this folder is JavaScript, with only one written in Python (`get_data.py`). The Python code is located here so that the application has easy access to its outputs: the data to be displayed on the webpage.
 
-`get_data.py` - This program is our main method of extracting the data from the database. All of the functions follow the same procedure but they are modified to extract data over different areas of time (more down below). The main function is recent_data(), which grabs the most recent entry in the database. 
+`get_data.py` - This program is our main method of extracting the data from the database. All of the functions follow the same procedure but they are modified to extract data over different areas of time (more down below). The main function is `recent_data()`, which grabs the most recent entry in the database. 
 
 ```
+def recent_data():
     sql = '''SELECT *
                 FROM sensor
                 WHERE time = (SELECT max(time)
@@ -59,9 +60,11 @@ Most of the code in this folder is JavaScript, with only one written in Python (
     cursor.execute(sql)
 
     data_result = cursor.fetchone()
+…
 ```
-We make use of SQL functions such as the SELECT statement. The order here matters because we are ensuring that we are grabbing the latest entry through the max time on the max day. In our hour_[variable]() functions we use the following: 
+We make use of SQL functions such as the `SELECT` statement. The order here matters because we are ensuring that we are grabbing the latest entry through the `max(time)` on the `max(day)`. In our `hour_[variable]()` functions we use the following: 
 ```
+def hour_[variable]():
    ​​today = date.today()
     
     sql = '''SELECT hour(time), AVG(humidity)
@@ -71,22 +74,24 @@ We make use of SQL functions such as the SELECT statement. The order here matter
     cursor.execute(sql, [today])
 
     hourly_result = cursor.fetchall()    
+…
 ```
-In the same way, we use date, we then further this in our ``` week_[variable]()``` functions by using this to subtract 7 days prior to the date as such: 
+In the same way, we use date, we then further this in our `week_[variable]()` functions by using this to subtract 7 days prior to the date as such: 
 ```
+def week_[variable]:
 today = date.today()
-    week_ago = (today - timedelta(days=7))
+   	week_ago = (today - timedelta(days=7))
     
-    sql = '''SELECT day(date), AVG(humidity)
-                FROM sensor
-                WHERE date >= %s
-                GROUP BY day(date)'''
-    cursor.execute(sql, [week_ago])
-    weekly_result = cursor.fetchall()  
-
+  	 sql = '''SELECT day(date), AVG(humidity)
+                	FROM sensor
+                	WHERE date >= %s
+               	 GROUP BY day(date)'''
+   	cursor.execute(sql, [week_ago])
+    	weekly_result = cursor.fetchall()  
+…
 ```
 
-Here we take advantage of built in libraries to be able to determine the date. We then use the SQL statement to calculate the AVG of whatever stat we are looking at. And then execute the statement based on the date recorded.
+Here we take advantage of built in libraries to be able to determine the date. We then use the SQL statement to calculate the `AVG` of whatever stat we are looking at. And then execute the statement based on the date recorded.
 
 ```
     f = open("data.js", "w")
@@ -94,18 +99,23 @@ Here we take advantage of built in libraries to be able to determine the date. W
     f.write("data = { \n")
 ```
 These procedures are consistent throughout all functions in the file. Through these statements, we are able to create a file on the first execution of the program, and later continuously update the file with the new desired data for a specific time frame. In the last two lines, we are beginning to format the file appropriately.
-
 ```
+def recent_data():
+…
     (id, hum, temp, moist, light, signal, time, date) = data_result
+…
 ```
 This statement unpackages the results from the SQL query formatted as a tuple into individual variables that contain their respective data. They are then converted to strings in the following way: 
 ```
+def recent_data():
+…
     hum = str(hum)
     temp = str(temp)
     moist = str(moist)
     time = str(time)
     date = str(date)
     light = str(light)
+…
 ```
 They are then packaged into a dictionary format
 
@@ -121,8 +131,20 @@ They are then packaged into a dictionary format
         "time": time,
     }
 ```
+Finally we then dump the dictionary into the JSON file, and then finish formatting the file.
+```
+​​    f = open("data.js", "a")
+    f.write('recent:')
+    f.close()
+    with open("data.js", "a") as outfile:
+        json.dump(y, outfile, indent=2)
+        
+    f = open("data.js" , 'a')
+    f.write("\n}")
+    f.close()  
+```
 
-The Week/Hour functions differentiate from get data because we are grabbing data over the course of time. We want to make sure all the data is being formatted, so a for statement is being used to make sure that as long as we still have data in the queue, that we continue to record it and label it with the correct way so that the files can be read.
+The Week/Hour functions differentiate from get data because we are grabbing data over the course of time. We want to make sure all the data is being formatted, so a for statement is being used to make sure that as long as we still have data in the queue, that we continue to record it and label it with the correct way so that the files can be read. Furthermore, this is where we are unpackaging the tuple from the SQL query, in almost the same way as we were in the `recent_data()`
 
 hour_[variable]()
 ```
@@ -170,7 +192,6 @@ for x in weekly_result:
         f.write(",\n")
         f.close()
         i+=1    
-
 ```
 
 `data.js` - One of the outputs of the `get_data.py` file. It is formatted as a JSON but is a .js file rather than a .json file in order to integrate more effectively with the rest of the application. The file currently contains a single set of example values hypothetically measured at a single moment. This is the data propagating the home page of the application.
@@ -283,6 +304,63 @@ finally:
 The overall LoRa protocol attempts to start() in order to begin waiting for inputs. If there is a manual interrupt, a message is written. After the start() method is finished, the resources on the board are then freed.
 
 ###### parser.py
+`parser.py` is going to be our method of inserting data that has been received by the pi through the LoRa sensor. `paser` is our function which is called within the `on_rx_done()` function. It receives a string which in this case is our data, as well as the signal strength. The first step is to establish connection to the database. This is done by 
+```
+def parser(string, rssi):
+con = database.connect( 
+    user = "ipl",
+    password = "ipl2023",
+    host = "localhost",
+    database = 'sensor_data',
+    )
+    cur = con.cursor()
+…
+```
+
+We then use `split` in order to split the string and format the recorded data into and array of floats. 
+```
+    floats = [float(x) for x in string.split(" ")]
+```
+
+From there we assign the data to a variable with its corresponding name, and then print them back to the user. This was mainly done for verification purposes during our testing to ensure the numbers are being assigned correctly. In addition to that, we are also capturing the signal strength, date and time and printing those out as well
+```
+    temperature = floats[0]
+    humidity = floats[1]
+    moisture = floats[2]
+    light_intensity = floats[3]
+    
+    print(temperature)
+    print(humidity)
+    print(moisture)
+    print(light_intensity)
+    
+    print(rssi)
+    
+    today = date.today()
+    
+    print(today)
+    
+    t = time.localtime() 
+    current_time = time.strftime("%H:%M:%S", t)
+    
+    print(current_time)
+```
+
+Finally we are inserting the variables to their corresponding columns within the table in the database. We are then printing back to the user that the data had been uploaded
+```
+    statement = ("INSERT INTO sensor "
+               "(humidity, temperature, moisture, rssi, light_intensity, time, date) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+    data = (humidity, temperature, moisture, rssi, light_intensity, current_time, today)
+    cur.execute(statement, data)
+    con.commit()
+    print("Successfully added entry to database")
+    cur.close()
+    con.close()
+
+```
+It is important to note that the order of the values in the `INSERT` statement must correspond to the order in which they are listed after indicating the desired table. Here the variable holding the humidity must be in the same spot as in the column labeled humidity, the temperature variable with the column labeled temperature, and so on.It does not matter whether or not they are in this particular order, but rather that they are in the same place
+
 
 ##### pySX127x
 This folder is a fork of the Python LoRa library that we used to enable LoRa communication on the Raspberry Pi. Since our group was more comfortable coding with Python, and to keep consistency with the other Python code on the Raspberry Pi, we used this library to write the file lora_gateway.py (see the 2nd and 3rd lines). The fork also contains other examples of ways to use the library which could be informative to following projects.
