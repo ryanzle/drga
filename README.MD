@@ -43,6 +43,8 @@ This repository is split into three directories. The `app` directory includes al
 #### APP
 This directory contains the HTML and CSS that make up the application’s visuals, using the logo and colors provided by the client. The text is hard-coded in Spanish and thus does not yet have a multi-language features; however, there are enough cognates and graphics for people who cannot speak Spanish to understand.
 
+An important detail about the HTML application is that it **must** be run on a live server in order for the data to be properly imported as modules. If opened in other ways, none of the numbers or graphs will display. The easiest way to run the HTML file on a live server is to install the [Live Studio extension in the Visual Studio Code IDE](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
+
 ##### SCRIPTS
 Most of the code in this folder is JavaScript, with only one written in Python (`get_data.py`). The Python code is located here so that the application has easy access to its outputs: the data to be displayed on the webpage.
 
@@ -146,7 +148,7 @@ Finally we then dump the dictionary into the JSON file, and then finish formatti
 
 The Week/Hour functions differentiate from get data because we are grabbing data over the course of time. We want to make sure all the data is being formatted, so a for statement is being used to make sure that as long as we still have data in the queue, that we continue to record it and label it with the correct way so that the files can be read. Furthermore, this is where we are unpackaging the tuple from the SQL query, in almost the same way as we were in the `recent_data()`
 
-hour_[variable]()
+`hour_[variable]()`
 ```
     for x in hourly_result:
         num = str(i)
@@ -170,7 +172,7 @@ hour_[variable]()
         f.close()
         i+=1  
 ```
-In the hour functions, we are recording the hour we are assigning the avg to and are doing a similar procedure in the ```week_[variable]()```
+In the hour functions, we are recording the hour we are assigning the avg to and are doing a similar procedure in the `week_[variable]()`
 ```
 for x in weekly_result:
         num = str(i)
